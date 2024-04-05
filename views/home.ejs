@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home page</title>
+  <link rel="stylesheet" href="css/home.css">
+</head>
+
+<body>
+
+
+  <div class="container">
+    <div class="first-div">
+      <span>Welcome <%- name %> </span><a href="/logout">Logout</a>
+      <div class="profile-section">
+        <!-- Profile section content -->
+        <!-- Example content: Name and Logout link -->
+
+      </div>
+      <h1>Quiz App</h1>
+      <form id="quizForm" action="/createQuizz" method="post">
+
+        <label for="quizTitle">Quiz Title:</label>
+        <br><br>
+        <input type="text" id="quizTitle" name="quizzTitleName" required>
+
+
+        <br><br>
+        <input onclick="addQuestion(this)" type="submit" value="Create Quizz">
+      </form>
+    </div>
+
+    <div class="second-div">
+
+
+      <% if (quizzs && quizzs.length > 0) { %>
+        <% quizzs.forEach(function(quizz, index) { %>
+            <h3><%- quizz.quizzTitleName %></h3>
+        <div class="question-div">
+            <form action="/createMcq" method="post">                
+              <label for="quizTitle">Question </label>
+              <input type="text" id="quizTitle"  name="questionBody" required>      
+              <input type="text" id="quizTitle" class="" name="option" required placeholder="A">                                
+              <input type="text" id="quizTitle" class="" name="option" required placeholder="B">                                
+              <input type="text" id="quizTitle" class="" name="option" required placeholder="C">                                
+              <input type="text" id="quizTitle" class="" name="option" required placeholder="D">    
+              
+              <label for="choices">Correct option :</label>
+              <select id="choices" name="AnswerIndex">
+              <option value="0">(A)</option>
+              <option value="1">(B)</option>
+              <option value="2">(C)</option>
+              <option value="3">(D)</option>
+              </select> 
+              <p><input type="submit" value="add question" style="transform: scale(0.9); background-color: gray;" onclick="addQuestion(this)"></p>
+              <p><input type="submit" value="Submit" onclick="addQuestion(this)"></p>
+          </form>
+        </div>
+
+        <% }); %>
+    <% } else { %>
+        <p>No quizzs yet</p>
+    <% } %>
+    
+
+
+
+    </div>
+  </div>
+
+
+  <script src="js/home.js"></script>
+
+</body>
+</htm

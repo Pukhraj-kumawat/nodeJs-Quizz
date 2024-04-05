@@ -3,13 +3,13 @@ require('dotenv').config();
 
 
 const createJwt = (req,res,next)=>{    
+    // res.send(req.body.email)
     const payload = {
-        email:req.body.email,
-        name:req.body.name
-    };
+        email:req.body.email
+    };    
     
-    jwtToken = jwt.sign(payload,process.env.MONGO_SECRET_KEY,{expiresIn:'1d'})    
-    res.cookie('jwtToken',jwtToken,{httpOnly:true})
+    jwtToken = jwt.sign(payload,process.env.MONGO_SECRET_KEY,{expiresIn:'1d'})           
+    res.cookie('jwtToken',jwtToken,{httpOnly:true})    
     next()
     
 }

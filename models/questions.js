@@ -1,30 +1,56 @@
 const mongoose = require('mongoose')
+const userModel = require('./user')
 
-const mcqSchema = new mongoose.Schema(
+const quizzTitle = new mongoose.Schema(
     {
-        questionBody:{
-            type:String,
-            required:true
+        quizzTitleName: {
+            type: 'String',
+            required: true
         },
-        choices:{
-            type:['String'],
-            required:true,
-            validate:{
-                validator:(choices)=>{
-                    return choices.length > 1;
-                },
-                message: 'At least one choice must be provided'
-            },
-            AnswerIndex:{
-                type:Number,
-                required:true,
-                min:0
-            }
-
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'userModel',
+            required: true
         }
+
     }
 )
 
-const mcqQuestion = mongoose.model('mcqQuestion',mcqSchema);
+const mcqSchema = new mongoose.Schema(
+    {
+        questionBody: {
+            type: String,
+            required: true
+        },
+        choices: {
+            type: ['String'],
+            required: true,
+            validate: {
+                validator: (choices) => {
+                    return choices.length > 1;
+                },
+                message: 'At least one choice must be provided'
+            },            
+        },
+        AnswerIndex: {
+            type: String,
+            required: true,                
+        },
+        quizzTitle: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'quizzTitle',
+            required: true,
+        },
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'userModel',
+            required: true
+        }
 
-module.exports = mcqQuestion;
+    }
+)
+
+const mcqQuestion = mongoose.model('mcqQuestion', mcqSchema);
+const quizTitleModel = mongoose.model('quizzTitle',quizzTitle)
+
+module.exports = {mcqQuestion,quizTitleModel};

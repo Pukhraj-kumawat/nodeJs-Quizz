@@ -2,7 +2,8 @@ const express = require('express')
 const app = express();
 require('dotenv').config();
 const connectDB = require('./db/connect')
-const router = require('./routes/authRoute');
+const authRouter = require('./routes/authRoute');
+const homeRoute = require('./routes/homeRoute')
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
@@ -18,8 +19,8 @@ const port = process.env.port || 3000
 
 app.use(cookieParser());
 
-app.use('/',router);
-
+app.use('/',authRouter);
+app.use(homeRoute);
 
 
 connectDB(process.env.MONGO_SECRET_KEY)

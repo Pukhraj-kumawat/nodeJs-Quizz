@@ -21,7 +21,7 @@ const signUp = (req, res) => {
                         if (req.body.registerToken === req.cookies.registerToken) {
                             newUser.save()
                                 .then(() => {                                    
-                                    res.send('User added successfully')
+                                    res.redirect('/home')
                                 }).catch((err) => {
                                     res.send(err)
                                 })
@@ -44,15 +44,8 @@ const login = (req, res) => {
         .then((document) => {
             if (req.body.registerToken === req.cookies.registerToken) {
                 bcrypt.compare(password, document.password, (err, result) => {
-                    if (result) {                        
-                        const payload = {
-                            email:req.body.email,
-                            name:req.body.name
-                        };
-                        const jwtToken = createJwt(payload)
-                        res.cookie('jwtToken',jwtToken,{httpOnly:true})
-
-                        res.send('logged in')
+                    if (result) {                           
+                        res.redirect('/home')
                     } else {
                         res.send('Authentication failed')
                     }
@@ -66,6 +59,13 @@ const login = (req, res) => {
         })
 }
 
+const logout = (req,res)=>{
+    if(req.cookies.jwtToken){
+        res.clearCookie('jwtToken');
+        res.redirect('/register')
+    }else{
+        throw new Error('You are not logged in yet')
+    }
+}
 
-
-module.exports = { signUp, login }
+module.exports = { signUp, login ,logout}
