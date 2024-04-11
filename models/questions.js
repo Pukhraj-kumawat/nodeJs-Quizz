@@ -50,7 +50,34 @@ const mcqSchema = new mongoose.Schema(
     }
 )
 
+const userQuizzModel = new mongoose.Schema(
+    {
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'userModel',
+            required: true
+        },
+        quizzTitle: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'quizzTitle',
+            required: true,
+        },
+        questions:[{
+            referencedObject: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'mcqSchema',
+                required:true
+            },
+            selectedIndex: String
+        }]
+
+}
+
+)
+
 const mcqQuestion = mongoose.model('mcqQuestion', mcqSchema);
 const quizTitleModel = mongoose.model('quizzTitle',quizzTitle)
+const userQuizz = mongoose.model('userQuizz',userQuizzModel)
 
-module.exports = {mcqQuestion,quizTitleModel};
+
+module.exports = {mcqQuestion,quizTitleModel,userQuizz};

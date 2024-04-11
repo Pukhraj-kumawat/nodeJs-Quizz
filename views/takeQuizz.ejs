@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+    <h4>Welcome,<%- user.name %></h4>
+    
+    <h3 style="background-color: lightgray;"><%- quizzTitle.quizzTitleName %></h3>
+
+<form action="/submitQuizz" method="post">
+    <% Questions.forEach(function(Question) { %>
+        <h4 style="background-color: lightpink;"><%- Question.questionBody %></h4>
+        <% let index = 0; %>
+        <% Question.choices.forEach(function(choice){ %>
+            <input type="radio" id="option1" name="<%-Question._id%>" value="<%- index %>">
+            <label for="option1"><%- choice %></label><br>
+            <% index++; %>
+        <% }); %>                            
+    <% }); %>
+    <br><br>
+    <input type="hidden" value="<%- quizzTitle._id %>" name="quizzTitleId">
+    <input type="submit" value="Submit" style="color: rgb(85, 177, 85); font-weight: bold;">
+</form>
+    
+</body>
+</html>

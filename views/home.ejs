@@ -35,42 +35,69 @@
     <div class="second-div">
 
 
-      <% if (quizzs && quizzs.length > 0) { %>
-        <% quizzs.forEach(function(quizz, index) { %>
-            <h3><%- quizz.quizzTitleName %></h3>
-        <div class="question-div">
-            <form action="/createMcq" method="post">                
-              <label for="quizTitle">Question </label>
-              <input type="text" id="quizTitle"  name="questionBody" required>      
-              <input type="text" id="quizTitle" class="" name="option" required placeholder="A">                                
-              <input type="text" id="quizTitle" class="" name="option" required placeholder="B">                                
-              <input type="text" id="quizTitle" class="" name="option" required placeholder="C">                                
-              <input type="text" id="quizTitle" class="" name="option" required placeholder="D">    
-              
-              <label for="choices">Correct option :</label>
-              <select id="choices" name="AnswerIndex">
-              <option value="0">(A)</option>
-              <option value="1">(B)</option>
-              <option value="2">(C)</option>
-              <option value="3">(D)</option>
-              </select> 
-              <p><input type="submit" value="add question" style="transform: scale(0.9); background-color: gray;" onclick="addQuestion(this)"></p>
-              <p><input type="submit" value="Submit" onclick="addQuestion(this)"></p>
-          </form>
-        </div>
+
+
+
+      <% for (const key in jsObject) { %>                        
+
+        <% for (const key1 in jsObject0) { %>
+          <% if (key1 == key) { %>
+            <h2 style="background-color: rgb(154, 149, 149);"><%- jsObject0[key1] %></h2>
+          <% } %>        
+        <% } %>
+
+
+        <% jsObject[key].forEach(function(mcqQuestion) { %>
+
+          <p style="background-color: rgb(236, 236, 125);"><%= mcqQuestion.questionBody %></p>
+
+          <% mcqQuestion.choices.forEach(function(option, index) { %>
+            <% if (index == 0) { %>
+              <hr> 
+               <p>A : <%= option %></p>   
+                          
+            <% } %>            
+            
+
+            <% if (index == 1) { %>
+              <hr>
+              <p>B : <%= option %></p>              
+            <% } %>
+            
+
+            <% if (index == 2) { %>
+              <hr>
+              <p>C : <%= option %></p>              
+            <% } %>
+            
+
+            <% if (index == 3) { %>
+              <hr>
+              <p>D : <%= option %></p>              
+            <% } %>
+            
+            
+            <% if (index == mcqQuestion.AnswerIndex) { %>
+              <span style="background-color: rgb(165, 207, 165);">Correct Option </span>
+            <% } %>
+
+            
+          <% }); %>          
+
 
         <% }); %>
-    <% } else { %>
-        <p>No quizzs yet</p>
-    <% } %>
-    
+        
+      <br><br>
+        <div id="<%- key%>">            
+          <button class="add-question" onclick="addQuestion('<%-key%>')">Add question</button>
+        </div>
 
-
+      <% } %>
 
     </div>
   </div>
 
-
+  
   <script src="js/home.js"></script>
 
 </body>

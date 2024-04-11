@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {home,submitQuizz,createQuizz} = require('../controllers/homeController')
+const {home,submitQuizz,createQuizz,createMcq,quizzHome,takeQuizz} = require('../controllers/homeController')
 const {verifyJwt} = require('../middlewares/jwtMiddleware')
 
 
@@ -13,7 +13,16 @@ router.route('/createQuizz')
     .post(verifyJwt,createQuizz)
 
 router.route('/submitQuizz')    
-    .get(verifyJwt,submitQuizz)
+    .post(verifyJwt,submitQuizz)
+
+router.route('/createMcq')
+    .post(verifyJwt,createMcq)
+
+router.route('/')
+    .get(verifyJwt,quizzHome)
+
+router.route('/takeQuizz')
+    .post(verifyJwt,takeQuizz)
 
 module.exports = router;
 
