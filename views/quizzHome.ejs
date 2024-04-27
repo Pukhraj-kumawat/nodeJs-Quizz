@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="css/quizzHome.css">
 
 </head>
-<body>
+<body>    
 
-    <h3>Welcome , <%- user.name %></h3>
+  <h4 class="greet">Welcome , <%- user.name %></h3>
 
 
 <div class="quiz-container">
@@ -22,14 +22,23 @@
         </form>     
       </div>
     <% }); %>
-
-    <div class="container">
-      <img src="img/profile.svg" alt="" class="icon">
-    </div>
-    
-
 </div>
 
+<a href="/home" class="create-quizz">Create Quizz</a>
+
+<div class="quizz-content">
+ 
+</div>
+
+<div class="icon-div">  
+  <img src="img/profile.svg" alt="" class="icon" onclick="profileclick()">
+  <div class="profile-data-div">    
+  </div>
+</div>
+
+
+
+<script src="js/quizzHome.js"></script>
 
 </body>
 </html>

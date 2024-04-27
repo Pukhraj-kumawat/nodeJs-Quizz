@@ -108,12 +108,11 @@ const quizzHome = (req,res)=>{
 
 }
 
-
 const takeQuizz = (req,res)=>{
     userModel.findOne({ email: req.credentials.email })
         .then((user)=>{
             quizTitleModel.findOne({_id:req.query.quizzId})
-                .then((quizz)=>{
+                .then((quizz)=>{                    
                     mcqQuestion.find({quizzTitle:req.query.quizzId})
                         .then((Questions)=>{
                             res.render('takeQuizz',{user:user,quizzTitle:quizz,Questions:Questions})
@@ -124,5 +123,96 @@ const takeQuizz = (req,res)=>{
 
 
 
+const yourQuizz = (req, res) => {
+    userModel.findOne({ email: req.credentials.email })
+        .then((user) => {
+            let array = [];
+            userQuizz.find({ user: user._id })
+                .then((quizzs) => {
 
-module.exports = { createQuizz, home, submitQuizz,createMcq ,quizzHome,takeQuizz};
+
+                    const promises = quizzs.map((quizz) => {
+                        return quizTitleModel.findOne({ _id: quizz.quizzTitle })
+                            .then((quizzTitleInstance) => {
+                                array.push(quizzTitleInstance);
+                            });
+                    });
+                    return Promise.all(promises)
+                        .then(() => {
+                            res.send(array);
+                        });
+
+
+                })
+                .catch((error) => {
+                    console.error(error);
+                    res.status(500).send("Internal Server Error");
+                });
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send("Internal Server Error");
+        });
+};
+
+
+// const yourQuizzInfo = (req,res)=>{  
+//     quizTitleModel.findOne({_id:req.query.id})
+//         .then((quizzTitle)=>{
+//              userQuizz.findOne({quizzTitle:req.query.id})
+//                 .then((userQuizzInstance)=>{   
+//                     // res.send(userQuizzInstance.questions);
+//                     const promisesArray = (userQuizzInstance.questions).map((question)=>{
+//                         return mcqQuestion.findOne({_id:question.referencedObject})
+//                             .then((mcqQuestionInstance)=>{
+//                                 let object = {mcqQuestionInstance:question.selectedIndex}                                
+//                                 res.write(`data: ${JSON.stringify(object)}\n\n`);
+//                                 // console.log('gone');                              
+//                             })
+//                     })                    
+//                     return Promise.all(promisesArray)
+//                         .then(()=>{
+//                             res.render('yourQuizz',{quizzTitle:quizzTitle,userQuizz:userQuizz})
+//                         }) 
+//                 }).catch((err)=>{
+//                     res.send(err)
+//                 })
+
+                
+//         })  
+        
+// }
+
+const yourQuizzInfo = (req,res)=>{
+    userModel.findOne({ email: req.credentials.email })
+        .then((user) => {
+            const promises = []
+            const arr = [];
+            userQuizz.findOne({quizzTitle:req.query.id,user:user})
+                .then((userQuizz)=>{
+                    userQuizz.questions.forEach((ob)=>{
+                        const promise = mcqQuestion.findById(ob.referencedObject)
+                                .then((mcqQuestionInstance)=>{
+                                    arr.push({referencedInstance:mcqQuestionInstance,selectedIndex:ob.selectedIndex})
+                                })                        
+                        promises.push(promise)                        
+
+                    })
+                    Promise.all(promises)
+                        .then(()=>{
+                            quizTitleModel.findById(req.query.id)
+                                .then((quizzTitle)=>{
+                                    // res.send(arr)
+                                    res.render('yourQuizz',{quizzTitle:quizzTitle,arr:arr})
+                                })
+                            
+                        })
+                })
+                
+        })
+}
+
+
+
+
+module.exports = { createQuizz, home, submitQuizz,createMcq ,quizzHome,takeQuizz,yourQuizz,yourQuizzInfo};

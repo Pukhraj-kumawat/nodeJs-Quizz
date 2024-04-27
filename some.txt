@@ -1,0 +1,5 @@
+[{"referencedInstance":{"_id":"6629ad6f1eb9488f4891a7fa","questionBody":"What is javascript","choices":["It is a programming language","It is database","it is related to devops","it is runtime enviroment"],"AnswerIndex":"0","quizzTitle":"6629ad4c1eb9488f4891a7f4","user":"6629ad3b1eb9488f4891a7ed","__v":0},"selectedIndex":"0"},{"referencedInstance":{"_id":"6629ad981eb9488f4891a800","questionBody":"How to define a constant in javascript?","choices":["let x = 10","x = 10","const x = 10","x == 10"],"AnswerIndex":"2","quizzTitle":"6629ad4c1eb9488f4891a7f4","user":"6629ad3b1eb9488f4891a7ed","__v":0},"selectedIndex":"3"}]
+
+
+
+     

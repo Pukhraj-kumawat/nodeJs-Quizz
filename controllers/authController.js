@@ -21,7 +21,7 @@ const signUp = (req, res) => {
                         if (req.body.registerToken === req.cookies.registerToken) {
                             newUser.save()
                                 .then(() => {                                    
-                                    res.redirect('/home')
+                                    res.redirect('/')
                                 }).catch((err) => {
                                     res.send(err)
                                 })
@@ -45,7 +45,7 @@ const login = (req, res) => {
             if (req.body.registerToken === req.cookies.registerToken) {
                 bcrypt.compare(password, document.password, (err, result) => {
                     if (result) {                           
-                        res.redirect('/home')
+                        res.redirect('/')
                     } else {
                         res.send('Authentication failed')
                     }

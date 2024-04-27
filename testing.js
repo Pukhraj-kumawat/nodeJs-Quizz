@@ -1,7 +1,8 @@
-// const result = /[0-9]+/.test('thisis123isthis')
-// console.log(result)
+const promise1 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("Promise resolved after timeout");
+    }, 2000); // Resolves after 2 seconds
+  });
 
-value='pukhrajkumawa343t@gmail.com'
-const isEmail = /[0-9,a-z,A-Z]+@[a-z,A-Z]+\.com/.test(value)
 
-console.log(isEmail)
+console.log(promise1.then().then())

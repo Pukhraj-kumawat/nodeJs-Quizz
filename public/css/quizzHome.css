@@ -1,13 +1,13 @@
 .quiz-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between; /* Or any other preferred layout */
+    justify-content: space-between;
   }
   
   .quiz-block {
-    width: 200px; /* Set width as per your design */
-    height: 200px; /* Set height as per your design */
-    margin-bottom: 20px; /* Adjust margin as needed */
+    width: 200px; 
+    height: 200px;
+    margin-bottom: 20px;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add box shadow */
@@ -15,9 +15,11 @@
   
 
   .quiz-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    max-width: 1000px;
+    background-color: lightgray;
+
   }
   
   .quiz-block {
@@ -47,18 +49,36 @@
     background-color: #45a049;
   }
   
-  .container {
+  .icon-div {
     position: relative;
     width: 100%;
     height: 100vh;
   }
-  
+  .create-quizz{
+    position: absolute;
+    top:20px;
+    right: 200px;
+
+  }
+
+  .quizz-content{
+    position: absolute;
+    top:100px;
+    right: 100px;
+    width: 200px;
+  }
+
   .icon {
     position: absolute;
-    top: -280px;
-    right: 20px;
+    top: -300px;
+    right: 40px;
     width: 35px;
     height: 35px;
     fill: #000; 
   }
   
+.profile-data-div{
+  position: absolute;
+  top: -260px;
+  right: 5px;
+}
