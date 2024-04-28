@@ -10,19 +10,26 @@
     
     <% arr.forEach((ob,index) => { %>
         <h3><%= ob.referencedInstance.questionBody  %></h3>
-
-        <% ob.referencedInstance.choices.forEach(choice => { %>            
-            <% if (ob.referencedInstance.AnswerIndex == index) { %>
-                <% if (ob.selectedIndex == ob.referencedInstance.AnswerIndex ) { %>                            
-                    <li><%= choice %></li>
-                    <h5>Correct and your answer</h5> 
+        <!-- <h1><%= index %></h1> -->
+        <% ob.referencedInstance.choices.forEach((choice,index) => { %>            
+            <div style="background-color: lightgray; width: fit-content; margin-bottom: 5px;">
+                
+                <p style=""><%= choice %></p>
+            
+                <% if (ob.referencedInstance.AnswerIndex == index) { %>
+                    <% if (ob.selectedIndex == ob.referencedInstance.AnswerIndex ) { %>                            
+                        
+                        <span style="color: green;">Correct answer , your answer</span> 
+                    <% } else { %>                    
+                        <span style="color: green;">Correct answer</span>
+                    <% } %>                    
                 <% } else { %>
-                    <li><%= choice %></li>
-                    <h5>Correct answer</h5>
-                <% } %>                    
-          <% } else { %>
-            <li><%= choice %></li>
-          <% } %>
+                    <% if ( ob.selectedIndex == index ) { %>                            
+                        <span style="color: red;">Your answer</span>
+                    <% } %>                    
+                <% } %>
+
+            </div>
 
         <% }); %>   
 
