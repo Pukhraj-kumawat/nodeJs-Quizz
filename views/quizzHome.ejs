@@ -16,8 +16,8 @@
     <% quizzs.forEach(function(quizz) { %>
       <div class="quiz-block" >
         <h2><%= quizz.quizzTitleName %></h2>   
-        <form action="/takeQuizz?quizzId=<%- quizz._id %>" method="post">            
-            <!-- <input type="hidden" value="<%- quizz._id %>" name="quizzId">                         -->
+        <form action="/takeQuizz" method="post">            
+            <input type="hidden" value="<%- quizz._id %>" name="quizzId">                        
             <input type="submit" class="take-quiz-btn" value="Take Quizz">
         </form>     
       </div>

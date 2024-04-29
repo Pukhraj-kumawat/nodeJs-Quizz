@@ -9,22 +9,29 @@
 <body>
     <h4>Welcome,<%- user.name %></h4>
     
-    <h3 style="background-color: lightgray;"><%- quizzTitle.quizzTitleName %></h3>
-
+    <h3 style="background-color: lightgray; width: fit-content;"><%- quizzTitle.quizzTitleName %></h3>
+<% let number = 1; %>
 <form action="/submitQuizz" method="post">
     <% Questions.forEach(function(Question) { %>
-        <h4 style="background-color: lightpink;"><%- Question.questionBody %></h4>
-        <% let index = 0; %>
-        <% Question.choices.forEach(function(choice){ %>
-            <input type="radio" id="option1" name="<%-Question._id%>" value="<%- index %>">
-            <label for="option1"><%- choice %></label><br>
-            <% index++; %>
-        <% }); %>                            
+    <div class="question<%-number%> question-div ">
+            <h4 style="background-color: lightpink; width: fit-content;"><%- Question.questionBody %></h4>
+            <% let index = 0; %>
+            <% Question.choices.forEach(function(choice){ %>
+                <input type="radio" id="option1" name="<%-Question._id%>" value="<%- index %>" required>
+                <label for="option1"><%- choice %></label><br>
+                <% index++; %>
+            <% }); %>    
+    </div>
+    <button onclick="nextClick(event,'<%= number %>','<%= Questions.length %>')" class="nextButton nextButton<%=number%>">Next</button>                        
+    <% number++; %>
+    <br>
     <% }); %>
     <br><br>
+    <br>
     <input type="hidden" value="<%- quizzTitle._id %>" name="quizzTitleId">
-    <input type="submit" value="Submit" style="color: rgb(85, 177, 85); font-weight: bold;">
+    <input type="submit" value="Submit" style="color: rgb(85, 177, 85); font-weight: bold;" class="submit-button">
 </form>
     
+<script src="js/takeQuizz.js"></script>
 </body>
 </html>

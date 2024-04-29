@@ -111,9 +111,9 @@ const quizzHome = (req,res)=>{
 const takeQuizz = (req,res)=>{
     userModel.findOne({ email: req.credentials.email })
         .then((user)=>{
-            quizTitleModel.findOne({_id:req.query.quizzId})
+            quizTitleModel.findOne({_id:req.body.quizzId})
                 .then((quizz)=>{                    
-                    mcqQuestion.find({quizzTitle:req.query.quizzId})
+                    mcqQuestion.find({quizzTitle:req.body.quizzId})
                         .then((Questions)=>{
                             res.render('takeQuizz',{user:user,quizzTitle:quizz,Questions:Questions})
                         })
