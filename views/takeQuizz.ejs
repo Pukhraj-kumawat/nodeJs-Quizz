@@ -17,7 +17,7 @@
             <h4 style="background-color: lightpink; width: fit-content;"><%- Question.questionBody %></h4>
             <% let index = 0; %>
             <% Question.choices.forEach(function(choice){ %>
-                <input type="radio" id="option1" name="<%-Question._id%>" value="<%- index %>" required>
+                <input type="radio" id="" class="radio-input<%= number %>" data-info="data info" name="<%-Question._id%>" value="<%- index %>" onclick="inputClick('<%= number %>')" required>
                 <label for="option1"><%- choice %></label><br>
                 <% index++; %>
             <% }); %>    
