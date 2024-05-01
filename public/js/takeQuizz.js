@@ -37,7 +37,8 @@ function inputClick(number){
 
 function nextClick(event,number,noOfQuestions){
     event.preventDefault();
-    
+
+    // check whether input is selected or not
     if(isInputClick){
         // Fetch and hide current Question and current next button when next clicked
         const currentQuestion =  document.querySelector(`.question${number}`)
@@ -48,12 +49,6 @@ function nextClick(event,number,noOfQuestions){
         if(currentNextButton){
             currentNextButton.style.display = 'none';
         }
-
-        // document.querySelectorAll(`.radio-input${number}`)
-        //     .forEach((inputElement)=>{
-        //         console.log(inputElement.dataset.info)
-        //     })
-
 
         // Fetch and show next question and next next button when next clicked
         const nextQuestion =  document.querySelector(`.question${parseInt(number)+1}`)

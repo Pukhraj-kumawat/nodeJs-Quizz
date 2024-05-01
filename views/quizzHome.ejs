@@ -11,32 +11,33 @@
 
   <h4 class="greet">Welcome , <%- user.name %></h3>
 
-
-<div class="quiz-container">
-    <% quizzs.forEach(function(quizz) { %>
-      <div class="quiz-block" >
-        <h2><%= quizz.quizzTitleName %></h2>   
-        <form action="/takeQuizz" method="post">            
-            <input type="hidden" value="<%- quizz._id %>" name="quizzId">                        
-            <input type="submit" class="take-quiz-btn" value="Take Quizz">
-        </form>     
-      </div>
-    <% }); %>
-</div>
-
-<a href="/home" class="create-quizz">Create Quizz</a>
-
-<div class="quizz-content">
- 
-</div>
-
-<div class="icon-div">  
-  <img src="img/profile.svg" alt="" class="icon" onclick="profileclick()">
-  <div class="profile-data-div">    
+<div class="super-div">
+  <div class="quiz-container">
+      <% quizzs.forEach(function(quizz) { %>
+        <div class="quiz-block" >
+          <h2><%= quizz.quizzTitleName %></h2>   
+          <form action="/takeQuizz" method="post">            
+              <input type="hidden" value="<%- quizz._id %>" name="quizzId">                        
+              <input type="submit" class="take-quiz-btn" value="Take Quizz">
+          </form>     
+        </div>
+      <% }); %>
   </div>
+
+  <a href="/home" class="create-quizz">Create Quizz</a>
+
+  <div class="quizz-content">
+  
+  </div>
+
+  <div class="icon-div">  
+    <img src="img/profile.svg" alt="" class="icon" onclick="profileClick()">
+    <div class="profile-data-div">    
+
+    </div>
+  </div>
+
 </div>
-
-
 
 <script src="js/quizzHome.js"></script>
 

@@ -61,6 +61,7 @@ const userQuizzModel = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'quizzTitle',
             required: true,
+            unique:true
         },
         questions:[{
             referencedObject: {

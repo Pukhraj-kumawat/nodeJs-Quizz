@@ -1,4 +1,5 @@
-function profileclick(){
+function profileClick(){
+  console.log('profilClick called');
     document.querySelector('.profile-data-div')
         .innerHTML = 
         `

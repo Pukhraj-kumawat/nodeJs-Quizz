@@ -102,7 +102,41 @@ const quizzHome = (req,res)=>{
         .then((user)=>{
             quizTitleModel.find({})
             .then((quizzs)=>{
-                res.render('quizzHome',{user:user,quizzs:quizzs})
+                const promiseArray = []
+                const quizzTitleIds = []
+                // Confirm whether user has given that quizz or not
+                userQuizz.find({user:user})
+                    .then((userQuizzs)=>{
+
+                        userQuizzs.forEach((userQuizz)=>{
+                            const promise = new Promise((res,rej)=>{
+                                quizzTitleIds.push(userQuizz.quizzTitle);
+                                res();
+                            })
+                            promiseArray.push(promise)
+                        })
+
+                        Promise.all(promiseArray)
+                            .then(()=>{      
+                                // console.log('quizzs   => ',quizzs);   
+                                // console.log('quizzTitleIds   => ',quizzTitleIds);
+                                const updatedQuizz = []
+                                quizzs.forEach((quizz)=>{ 
+                                    let exist = 0;                       
+                                    quizzTitleIds.forEach((quizzTitleId)=>{  
+                                        if(quizz._id.equals(quizzTitleId)){
+                                            exist++;                                         
+                                        }
+                                    })                                    
+                                    if(exist === 0){
+                                        updatedQuizz.push(quizz)
+                                    }
+                                })
+                                // console.log('updatedQuizzs   => ',updatedQuizz);
+                                res.render('quizzHome',{user:user,quizzs:updatedQuizz})
+                            })                    
+                      
+                    })
             })
         })
 
@@ -110,7 +144,7 @@ const quizzHome = (req,res)=>{
 
 const takeQuizz = (req,res)=>{
     userModel.findOne({ email: req.credentials.email })
-        .then((user)=>{
+        .then((user)=>{            
             quizTitleModel.findOne({_id:req.body.quizzId})
                 .then((quizz)=>{                    
                     mcqQuestion.find({quizzTitle:req.body.quizzId})

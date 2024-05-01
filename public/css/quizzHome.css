@@ -1,9 +1,4 @@
-.quiz-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  
+
   .quiz-block {
     width: 200px; 
     height: 200px;
@@ -50,9 +45,11 @@
   }
   
   .icon-div {
-    position: relative;
+    /* position: relative;
     width: 100%;
     height: 100vh;
+     */
+     background-color: lightgreen;
   }
   .create-quizz{
     position: absolute;
@@ -69,16 +66,21 @@
   }
 
   .icon {
-    position: absolute;
+    /* position: absolute;
     top: -300px;
-    right: 40px;
+    right: 40px; */
     width: 35px;
     height: 35px;
-    fill: #000; 
+    /* fill: #000;  */
   }
   
-.profile-data-div{
+/* .profile-data-div{
   position: absolute;
   top: -260px;
   right: 5px;
+} */
+
+.super-div{
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr;
 }
