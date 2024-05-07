@@ -73,7 +73,7 @@ const submitQuizz = (req, res) => {
                         quizzTitle:req.body.quizzTitleId,
                         questions:array
                     }).then((createUser)=>{
-                        res.send("User quizz created")
+                        res.redirect('/')
                     })
                 })
         })

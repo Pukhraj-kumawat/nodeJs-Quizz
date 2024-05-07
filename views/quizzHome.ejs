@@ -10,9 +10,11 @@
 <body>    
 
   <h4 class="greet">Welcome , <%- user.name %></h3>
+    <a href="/home" class="create-quizz">Create Quizz</a>
+
 
 <div class="super-div">
-  <div class="quiz-container">
+  <div class="quizz-container">
       <% quizzs.forEach(function(quizz) { %>
         <div class="quiz-block" >
           <h2><%= quizz.quizzTitleName %></h2>   
@@ -24,7 +26,6 @@
       <% }); %>
   </div>
 
-  <a href="/home" class="create-quizz">Create Quizz</a>
 
   <div class="quizz-content">
   

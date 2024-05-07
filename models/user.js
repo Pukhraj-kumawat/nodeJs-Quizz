@@ -6,11 +6,7 @@ const user = new mongoose.Schema({
         required:[true,'Must provide name'],
         maxlength: [20, 'name can not be more than 20 characters'],
     },
-    // username:{
-    //     type:String,
-    //     required:[true,'Must provide username'],
-    //     maxlength: [20, 'name can not be more than 20 characters'],
-    // },
+
     password:{
         type:String,
         required:[true,'Must provide password'],
@@ -20,8 +16,7 @@ const user = new mongoose.Schema({
                 const hasNumber = /[0-9]+/.test(value);
                 return hasSpecialCharacter || hasNumber;
             },
-            // message:error => `Password must contain at least one special character and one number`
-            message:(error) => {return `Password must contain at least one special character and one number`}
+            message:(error) => {return `Password must contain at least one special character or one number`}
 
         }
     },
