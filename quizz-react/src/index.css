@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes modal {
+    0% {
+      opacity: 0;
+      transform: scale(0.70);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  .animate-modal {
+    animation: modal 0.3s ease-out forwards;
+  }
+  

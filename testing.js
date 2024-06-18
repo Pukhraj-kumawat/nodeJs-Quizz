@@ -1,9 +1,3 @@
-function fun(){
-  if(0 == 0){
-    console.log('are equal')
-    return;
-    console.log('after return inside if');
-  }
-  console.log('outside of return')
+for (i in [1,2,3,4,5]){
+  console.log(i);
 }
-fun()

@@ -1,71 +1,76 @@
-const { default: mongoose } = require('mongoose');
-const userModel = require('../models/user')
-const bcrypt = require('bcrypt');
-const {createJwt,verifyJwt} = require('../middlewares/jwtMiddleware');
-require('dotenv').config()
+const { default: mongoose } = require("mongoose");
+const userModel = require("../models/user");
+const bcrypt = require("bcrypt");
+const { createJwt, verifyJwt } = require("../middlewares/jwtMiddleware");
+require("dotenv").config();
 
-
-const signUp = (req, res) => {    
+const signUp = (req, res) => {
     bcrypt.genSalt(10, (err, salt) => {
-        if (!err) {
-            
-            if (req.body.password === req.body.confirmPassword) {
-                bcrypt.hash(req.body.password, salt, (err, hashedPassword) => {
-                    if (!err) {                                                                     
-// Create new user instance                        
-                        const newUser = new userModel({
-                            name: req.body.name,
-                            email: req.body.email,
-                            password: hashedPassword
-                        })
-                        if (req.body.registerToken === req.cookies.registerToken) {
-                            newUser.save()
-                                .then(() => {                                    
-                                    res.redirect('/')
-                                }).catch((err) => {
-                                    res.send(err)
-                                })
-                        } else {
-                            res.send('registerToken not verified')
-                        }
-                    }
-                })
-            }
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ error: 'Error generating salt' });
+      }
+      
+      if (req.body.password !== req.body.confirm_password) {
+        return res.status(400).json({ error: 'Passwords do not match' });
+      }
+  
+      bcrypt.hash(req.body.password, salt, (err, hashedPassword) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({ error: 'Error hashing password' });
         }
-    })
-}
+
+        const newUser = new userModel({
+          name: req.body.first_name + ' ' +req.body.last_name,
+          email: req.body.email,
+          password: hashedPassword,
+        });
+  
+        newUser.save()
+          .then((user) => {
+            res.status(200).json({message:"success"});
+          })
+          .catch((err) => {
+            console.log(err);
+            return res.status(500).json({ error: 'Error saving user' });
+          });
+      });
+    });
+  };
+  
+
 
 
 const login = (req, res) => {
-    const email = req.body.email;
-    const password = req.body.password;
-    
-    userModel.findOne({ 'email': email })
-        .then((document) => {
-            if (req.body.registerToken === req.cookies.registerToken) {
-                bcrypt.compare(password, document.password, (err, result) => {
-                    if (result) {                           
-                        res.redirect('/')
-                    } else {
-                        res.send('Authentication failed')
-                    }
-                })
-            } else {
-                res.send('registerToken verification failed')
-            }
-        }).catch((err) => {
-            console.log(err)
-            res.send('some error while fetching document')
-        })
-}
+  const email = req.body.email;
+  const password = req.body.password;
 
-const logout = (req,res)=>{
-    if(req.cookies.jwtToken){
-        res.clearCookie('jwtToken');
-        res.redirect('/register')
-    }else{
-        throw new Error('You are not logged in yet')
-    }
-}
+  userModel
+    .findOne({ email: email })
+    .then((user) => {
+      bcrypt.compare(password, user.password, (err, result) => {
+        if (result) {
+          res.status(200).json({message:"success"});
+        } else {
+          res.status(401).json({ error: 'Incorrect password' });
 
-module.exports = { signUp, login ,logout}
+        }
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send("some error while fetching user");
+    });
+};
+
+const logout = (req, res) => {
+  if (req.cookies.jwtToken) {
+    res.clearCookie("jwtToken");
+    res.redirect("/register");
+  } else {
+    throw new Error("You are not logged in yet");
+  }
+};
+
+module.exports = { signUp, login, logout };

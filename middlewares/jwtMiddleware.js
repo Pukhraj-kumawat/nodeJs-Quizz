@@ -3,7 +3,7 @@ require('dotenv').config();
 
 
 const createJwt = (req,res,next)=>{    
-    // res.send(req.body.email)
+
     const payload = {
         email:req.body.email
     };    
@@ -14,14 +14,20 @@ const createJwt = (req,res,next)=>{
     
 }
 
-const verifyJwt = (req,res,next)=>{
-    decoded = jwt.verify(req.cookies.jwtToken,process.env.MONGO_SECRET_KEY);
-    if(decoded){
-        req.credentials = decoded;
-        next();
-    } else{
-        throw new Error('Something went wrong while verifiying jwt')    
-    }
+const verifyJwt = (req,res,next)=>{   
+    try {
+        decoded = jwt.verify(req.cookies.jwtToken,process.env.MONGO_SECRET_KEY); 
+        if(decoded){
+            req.credentials = decoded;
+            next();
+        } else{            
+            throw new Error('Something went wrong while verifiying jwt')            
+        }   
+    } catch (error) {
+        res.status(401).json(error)
+    } 
+    
+   
 }
 
 

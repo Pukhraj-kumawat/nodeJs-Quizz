@@ -6,6 +6,8 @@ const authRouter = require('./routes/authRoute');
 const homeRoute = require('./routes/homeRoute')
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+
 
 
 app.use(bodyParser.json());
@@ -15,7 +17,12 @@ app.use(express.static('public'));
 
 app.set('view engine', 'ejs');
 
-const port = process.env.port || 3000
+const port = process.env.port || 1000
+
+app.use(cors({
+    origin: 'http://localhost:5173', 
+    credentials: true
+}));
 
 app.use(cookieParser());
 
