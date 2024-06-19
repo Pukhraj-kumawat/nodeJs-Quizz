@@ -8,7 +8,7 @@ const createJwt = (req,res,next)=>{
         email:req.body.email
     };    
     
-    jwtToken = jwt.sign(payload,process.env.MONGO_SECRET_KEY,{expiresIn:'1d'})           
+    jwtToken = jwt.sign(payload,process.env.MONGO_SECRET_KEY,{expiresIn:'5d'})           
     res.cookie('jwtToken',jwtToken,{httpOnly:true})    
     next()
     
