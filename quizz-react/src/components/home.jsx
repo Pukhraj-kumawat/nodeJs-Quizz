@@ -47,43 +47,65 @@ const Home = (props) => {
     setIsModalOpen(true);
   };
 
+  const handleLogout = async () =>{
+    // localStorage.removeItem("isLoggedIn");
+   
+    const response = await axios.get('http://localhost:1000/logout',
+      {
+        withCredentials:true
+      }      
+    )
+    if(response.status === 200){
+      localStorage.removeItem("isLoggedIn");
+      setIsLoggedIn(false);
+      console.log('Logged out succesfull');
+    }
+  } 
+
+
   return (
     <>
       {userName ? (
         <div>
           <div className="flex flex-row justify-between p-4">
             <div>
-              <p className="ml-4">
-                Welcome, <b>{userName} </b>
-              </p>
-
-              <div className="flex flex-row justify-between m-4 ">
-                <button
-                  className="bg-yellow-200 hover:bg-yellow-300 font-bold text-yellow  py-2 px-2 mr-2 rounded "
-                  onClick={() => {
-                    setIsCreatedQuizz(true);
-                  }}
-                >
-                  Created quizzs
-                </button>
-                <button
-                  className="bg-purple-200 hover:bg-purple-300 font-bold text-yellow  py-2 px-4 rounded "
-                  onClick={() => {
-                    setIsYourQuizz(true);
-                  }}
-                >
-                  Your quizzs
-                </button>
-              </div>
-            </div>
-            <div className="">
               <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                className="bg-yellow-200 hover:bg-yellow-300 font-bold text-yellow  py-2 px-2 mr-2 rounded "
+                onClick={() => {
+                  setIsCreatedQuizz(true);
+                }}
+              >
+                Created quizzs
+              </button>
+              <button
+                className="bg-purple-200 hover:bg-purple-300 font-bold text-yellow py-2 px-4 rounded "
+                onClick={() => {
+                  setIsYourQuizz(true);
+                }}
+              >
+                Your quizzs
+              </button>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-10 rounded"
                 onClick={handleOpenModal}
               >
                 Create quizz
               </button>
+
+              <p className="ml-4">
+                Welcome, <b>{userName} </b>
+              </p>
+              <button
+                className="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white font-bold px-2  rounded"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>              
             </div>
+
           </div>
 
           {isModalOpen && <CreateQuizz setIsModalOpen={setIsModalOpen} />}
@@ -97,8 +119,7 @@ const Home = (props) => {
             />
           )}
 
-          {isYourQuizz && <ViewYourQuizzs setIsYourQuizz = {setIsYourQuizz} /> }
-            
+          {isYourQuizz && <ViewYourQuizzs setIsYourQuizz={setIsYourQuizz} />}
         </div>
       ) : (
         <div className="flex justify-center items-center min-h-screen">

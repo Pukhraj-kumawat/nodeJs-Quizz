@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {home,submitQuizz,createQuizz,fetchQuestions,fetchYourQuizzs,fetchYourQuizz,takeQuizz,} = require('../controllers/homeController')
+const {home,submitQuizz,createQuizz,fetchQuestions,fetchYourQuizzs,fetchYourQuizz,takeQuizz,logout} = require('../controllers/homeController')
 const {verifyJwt} = require('../middlewares/jwtMiddleware')
 
 
@@ -25,6 +25,8 @@ router.route('/fetchYourQuizzs')
 router.route('/fetchYourQuizz')    
     .post(verifyJwt,fetchYourQuizz)
 
+router.route('/logout')    
+    .get(verifyJwt,logout)
 
 
 module.exports = router;

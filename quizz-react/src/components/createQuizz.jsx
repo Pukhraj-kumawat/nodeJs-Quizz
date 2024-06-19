@@ -87,7 +87,7 @@ const CreateQuizz = (props) => {
       );
       if (response.status === 201) {
         setIsModalOpen(false);
-        // window.location.reload();
+        window.location.reload();
       }
     };
     createQuizzResponse();

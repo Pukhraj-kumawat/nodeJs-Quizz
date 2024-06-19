@@ -58,6 +58,8 @@ const mcqSchema = new mongoose.Schema(
     }
 )
 
+
+
 const userQuizzSchema = new mongoose.Schema(
     {
         takenBy: {
@@ -80,10 +82,6 @@ const userQuizzSchema = new mongoose.Schema(
             selectedIndex: {
                 type:Number,                             
             },
-            isExpired : {
-                type:Boolean,
-                default:false
-            }
         }]
 
 }

@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { MdSentimentDissatisfied } from "react-icons/md";
 
 const ViewCreatedQuizz = (props) => {
   const { yourCreatedQuizzs, setIsCreatedQuizz } = props;
   const [selectedQuizz, setSelectedQuizz] = useState(null);
   const [questions, setQuestions] = useState(null);
+
 
   const handleViewInfo = async (quizz) => {
     const questionsRes = await axios.post(
@@ -35,10 +37,9 @@ const ViewCreatedQuizz = (props) => {
       {/* <h1 className="text-2xl font-bold mb-4">Your Quizzes</h1> */}
 
       <div className=" bg-white p-4 rounded shadow h-4/5 w-4/5  ">
-
-      <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between">
           <h1 className="text-3xl font-bold mb-4">Your created quizzs</h1>
-          
+
           <button
             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2"
             onClick={() => {
@@ -53,13 +54,13 @@ const ViewCreatedQuizz = (props) => {
         <div className="space-y-2 overflow-y-auto h-5/6">
 
           {selectedQuizz && questions ? (
-            
-            
             <div className="bg-gray-200 rounded shadow px-2 py-6 h-full">
-                <h2 className="text-xl font-semibold px-4">{selectedQuizz.title}</h2>
-                <p className="text-gray-700 mb-2 px-4">
-                  {selectedQuizz.description}
-                </p>
+              <h2 className="text-xl font-semibold px-4">
+                {selectedQuizz.title}
+              </h2>
+              <p className="text-gray-700 mb-2 px-4">
+                {selectedQuizz.description}
+              </p>
               <div className="overflow-y-auto h-4/5">
                 <div className="p-4 ">
                   {questions.map((question, index) => (
@@ -88,8 +89,7 @@ const ViewCreatedQuizz = (props) => {
                 </div>
               </div>
             </div>
-
-          ) : (
+          ) : yourCreatedQuizzs.length > 0 ? (
             yourCreatedQuizzs.map((quizz) => (
               <div key={quizz._id} className="bg-gray-200 rounded shadow p-4 ">
                 <h2 className="text-xl font-semibold">{quizz.title}</h2>
@@ -106,9 +106,16 @@ const ViewCreatedQuizz = (props) => {
                 </button>
               </div>
             ))
+          ) : (
+            <div className="flex flex-col items-center justify-center h-full">
+              <MdSentimentDissatisfied className="w-16 h-16 text-gray-400 mb-4" />
+              <p className="text-gray-500">No quizz found!</p>
+            </div>
           )}
+
+
+        </div>
       </div>
-    </div>
     </div>
   );
 };

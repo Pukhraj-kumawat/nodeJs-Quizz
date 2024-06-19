@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { ClipLoader } from "react-spinners";
+import { MdSentimentDissatisfied } from "react-icons/md";
 
 const ViewYourQuizzs = (props) => {
   const { setIsYourQuizz } = props;
@@ -8,15 +9,20 @@ const ViewYourQuizzs = (props) => {
 
   const [selectedQuizz, setSelectedQuizz] = useState(null);
   const [questions, setQuestions] = useState(null);
-  const [yourQuizzsState, setYourQuizzsstate] = useState(null);
+  const [yourQuizzsState, setYourQuizzsState] = useState("loading");
+
 
   useEffect(() => {
     axios
       .get("http://localhost:1000/fetchYourQuizzs", {
         withCredentials: true,
       })
-      .then((results) => {
-        setYourQuizzsstate(results.data);
+      .then((results) => {        
+        if (results.data.length > 0) {
+          setYourQuizzsState(results.data);          
+        } else {
+          setYourQuizzsState(null);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -111,7 +117,7 @@ const ViewYourQuizzs = (props) => {
                 </div>
               </div>
             </div>
-          ) : yourQuizzsState ? (
+          ) : (yourQuizzsState !== "loading" && yourQuizzsState ? (
             yourQuizzsState.map((quizz) => (
               <div key={quizz._id} className="bg-gray-200 rounded shadow p-4 ">
                 <h2 className="text-xl font-semibold">{quizz.title}</h2>
@@ -128,11 +134,21 @@ const ViewYourQuizzs = (props) => {
                 </button>
               </div>
             ))
-          ) : (
+          ) : (yourQuizzsState === "loading" ? (
             <div className="flex justify-center items-center ">
               <ClipLoader color="#4A90E2" loading={true} size={50} />
             </div>
-          )}
+          ) : (
+            <div className="flex flex-col items-center justify-center h-full">
+              <MdSentimentDissatisfied className="w-16 h-16 text-gray-400 mb-4" />
+              <p className="text-gray-500">No quizz found!</p>
+            </div>
+          ))
+          
+          )
+          
+          }
+          
         </div>
       </div>
     </div>
